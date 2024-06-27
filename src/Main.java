@@ -2,15 +2,73 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Banking();
+        //Banking();
+        Randomguess();
 
     }
+    public static void Randomguess() {
+        double correctnumber = Math.random();
+        double numar = Math.round(correctnumber*100);
+
+
+        System.out.println("\nGhici numarul intreg intre 1 si 100");
+        Scanner scanner = new Scanner(System.in);
+
+        if (scanner.hasNextInt() == true) {
+            double n = Double.parseDouble(scanner.nextLine());
+            int iteratii = 0;
+            while (n != numar) {
+                System.out.println("\nN-ai ghicit, mai ai o sansa. Introdu un nou ghici :)");
+                if (n < numar) {
+                    System.out.println("de data asta incearca un numar mai mare");
+                }
+                else {
+                    System.out.println("de data asta incearca un numar mai mic");
+                }
+                n = Integer.parseInt(scanner.nextLine());
+                iteratii = iteratii + 1;
+
+
+            }
+            //System.out.println("\nBravo in sfarsit ai ghicit");
+            if (iteratii <=5) {
+                System.out.println("Amazing! you have a great intuition!!!");
+            }
+            else {
+                    if (iteratii <= 10) {
+                        System.out.println("Well done! you have a great intuition!!!");
+                    }
+                    else {
+                        if (iteratii <=15) {
+                            System.out.println("Good job! you have a great intuition!!!");
+                        }
+                        else {
+                            if (iteratii <=20 ) {
+                                System.out.println("Nice effort!");
+                            }
+                            else {
+                                System.out.println("Don't give up");
+                            }
+                        }
+                    }
+
+            }
+
+
+        }
+
+
+    }
+
+
+
+
+
 
 
         public static void Banking() {
             double balantainitiala = 1000;
             double conteconomii = 240;
-            int iSelectie = 0;
             String continua = "y";
 
             do {
