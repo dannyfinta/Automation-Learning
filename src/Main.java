@@ -13,8 +13,8 @@ public class Main {
             int iSelectie = 0;
             String continua = "y";
 
-            while (continua == "y") {
-                System.out.println("Ce operatiune doriti sa efectuati?");
+            do {
+                System.out.println("\nCe operatiune doriti sa efectuati?");
                 System.out.println("1. Verificare sold");
                 System.out.println("2. Deposit");
                 System.out.println("3. Retragere");
@@ -23,6 +23,9 @@ public class Main {
 
                 if (selectie.hasNextInt() == false) {
                     System.out.println("Optiune incorecta");
+                    System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
+                    Scanner reincerc = new Scanner(System.in);
+                    continua = reincerc.nextLine();
                 } else {
                     int selectnumber = selectie.nextInt();
                     switch (selectnumber) {
@@ -38,20 +41,33 @@ public class Main {
                                 case 1:
                                     System.out.println("Contul dumnevoastra curent este de: " + balantainitiala + " USD");
                                     System.out.println("Contul dumnevoastra economii este de: " + conteconomii + " USD");
+                                    System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
+                                    Scanner reincerc = new Scanner(System.in);
+                                    continua = reincerc.nextLine();
                                     break;
                                 case 2:
                                     System.out.println("Contul dumnevoastra curent este de: " + 0.93 * balantainitiala + " EUR");
                                     System.out.println("Contul dumnevoastra economii este de: " + 0.93 * conteconomii + " EUR");
+                                    System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
+                                    reincerc = new Scanner(System.in);
+                                    continua = reincerc.nextLine();
                                     break;
                                 case 3:
                                     System.out.println("Contul dumnevoastra curent este de: " + 4.63 * balantainitiala + " RON");
                                     System.out.println("Contul dumnevoastra economii este de: " + 4.63 * conteconomii + " RON");
+                                    System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
+                                    reincerc = new Scanner(System.in);
+                                    continua = reincerc.nextLine();
                                     break;
                                 default:
                                     System.out.println("Nu ati ales o optiune valida");
+                                    System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
+                                    reincerc = new Scanner(System.in);
+                                    continua = reincerc.nextLine();
                                     break;
 
                             }
+
                             break;
 
                         case 2:
@@ -61,9 +77,15 @@ public class Main {
                             if (sd > 0) {
                                 balantainitiala = balantainitiala + sd;
                                 System.out.println("Contul dumnevoastra are acum in el " + balantainitiala + " USD");
+                                System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
+                                Scanner reincerc = new Scanner(System.in);
+                                continua = reincerc.nextLine();
                                 break;
                             } else {
                                 System.out.println("Valoarea introdusa este incorecta");
+                                System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
+                                Scanner reincerc = new Scanner(System.in);
+                                continua = reincerc.nextLine();
                                 break;
                             }
                         case 3:
@@ -75,34 +97,50 @@ public class Main {
                                 conteconomii = conteconomii + (1 - sr % 1);
                                 System.out.println("Contul dumnevoastra are acum in el " + balantainitiala + " USD");
                                 System.out.println("Contul dumnevoastra de economii are acum in el " + conteconomii + " USD");
+                                System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
+                                Scanner reincerc = new Scanner(System.in);
+                                continua = reincerc.nextLine();
                                 break;
                             } else {
                                 System.out.println("Fonduri insuficiente");
+                                System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
+                                Scanner reincerc = new Scanner(System.in);
+                                continua = reincerc.nextLine();
                                 break;
                             }
                         case 4:
                             System.out.println("Ce suma doriti sa transferati?");
                             Scanner sumatransfer = new Scanner(System.in);
                             double st = Double.parseDouble(sumatransfer.nextLine());
-                            if (balantainitiala >= st) {
+                            if (balantainitiala >= st & st>0) {
                                 balantainitiala = balantainitiala - st;
                                 conteconomii = conteconomii + st;
                                 System.out.println("Contul dumnevoastra are acum in el " + balantainitiala + " USD");
                                 System.out.println("Contul dumnevoastra de economii are acum in el " + conteconomii + " USD");
+                                System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
+                                Scanner reincerc = new Scanner(System.in);
+                                continua = reincerc.nextLine();
                                 break;
                             } else {
-                                System.out.println("Fonduri insuficiente");
+                                System.out.println("Fonduri insuficiente sau suma incorecta");
+                                System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
+                                Scanner reincerc = new Scanner(System.in);
+                                continua = reincerc.nextLine();
                                 break;
                             }
 
                         default:
                             System.out.println("Nu ati ales o optiune valida");
+                            System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
+                            Scanner reincerc = new Scanner(System.in);
+                            continua = reincerc.nextLine();
                             break;
 
 
                     }
                 }
-            }
+            } while (continua.equalsIgnoreCase("y"));
+            System.out.println("Va multumim ca ati apelat la serviciile bancii noastre!");
         }
 }
 
