@@ -10,7 +10,6 @@ public class Main {
         public static void Banking() {
             double balantainitiala = 1000;
             double conteconomii = 240;
-            int iSelectie = 0;
             String continua = "y";
 
             do {
