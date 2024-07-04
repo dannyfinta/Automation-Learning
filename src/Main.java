@@ -7,56 +7,60 @@ public class Main {
 
     }
     public static void Randomguess() {
-        double correctnumber = Math.random();
-        double numar = Math.round(correctnumber*100);
+        double correctnumber = 0;
+        double numar = 0;
+        String continua = "y";
+
+        do {
+            correctnumber = Math.random();
+            numar = Math.round(correctnumber*100);
+
+            System.out.println("\nGhici numarul intreg intre 1 si 100");
+            Scanner scanner = new Scanner(System.in);
+
+            if (scanner.hasNextInt() == true) {
+                double n = Double.parseDouble(scanner.nextLine());
+                int iteratii = 0;
+                while (n != numar) {
+                    System.out.println("\nN-ai ghicit, mai ai o sansa. Introdu un nou ghici :)");
+                    if (n < numar) {
+                        System.out.println("de data asta incearca un numar mai mare");
+                    } else {
+                        System.out.println("de data asta incearca un numar mai mic");
+                    }
+                    n = Integer.parseInt(scanner.nextLine());
+                    iteratii = iteratii + 1;
 
 
-        System.out.println("\nGhici numarul intreg intre 1 si 100");
-        Scanner scanner = new Scanner(System.in);
-
-        if (scanner.hasNextInt() == true) {
-            double n = Double.parseDouble(scanner.nextLine());
-            int iteratii = 0;
-            while (n != numar) {
-                System.out.println("\nN-ai ghicit, mai ai o sansa. Introdu un nou ghici :)");
-                if (n < numar) {
-                    System.out.println("de data asta incearca un numar mai mare");
                 }
-                else {
-                    System.out.println("de data asta incearca un numar mai mic");
-                }
-                n = Integer.parseInt(scanner.nextLine());
-                iteratii = iteratii + 1;
-
-
-            }
-            //System.out.println("\nBravo in sfarsit ai ghicit");
-            if (iteratii <=5) {
-                System.out.println("Amazing! you have a great intuition!!!");
-            }
-            else {
+                //System.out.println("\nBravo in sfarsit ai ghicit");
+                if (iteratii <= 5) {
+                    System.out.println("Amazing! you have a great intuition!!!");
+                } else {
                     if (iteratii <= 10) {
-                        System.out.println("Well done! you have a great intuition!!!");
-                    }
-                    else {
-                        if (iteratii <=15) {
-                            System.out.println("Good job! you have a great intuition!!!");
-                        }
-                        else {
-                            if (iteratii <=20 ) {
-                                System.out.println("Nice effort!");
-                            }
-                            else {
-                                System.out.println("Don't give up");
+                        System.out.println("Well done! You have good guessing skills!");
+                    } else {
+                        if (iteratii <= 15) {
+                            System.out.println("Good job! Practice makes it perfect.");
+                        } else {
+                            if (iteratii <= 20) {
+                                System.out.println("Nice effort! Keep practicing to improve!");
+                            } else {
+                                System.out.println("Don't give up! You'll get better with more Practice!!!");
                             }
                         }
                     }
+
+                }
+
 
             }
+            System.out.println("\nDoriti sa mai jucati o data? Y/N");
+            Scanner reincerc = new Scanner(System.in);
+            continua = reincerc.nextLine();
 
 
-        }
-
+        } while (continua.equalsIgnoreCase("y"));
 
     }
 
