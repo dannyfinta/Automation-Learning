@@ -13,7 +13,7 @@ public class Main {
 
         do {
             correctnumber = Math.random();
-            numar = Math.round(correctnumber*100);
+            numar = Math.round(correctnumber*100)+1;
 
             System.out.println("\nGhici numarul intreg intre 1 si 100");
             Scanner scanner = new Scanner(System.in);
@@ -54,6 +54,9 @@ public class Main {
                 }
 
 
+            }
+            else {
+                System.out.println("Nu ati introdus un numar valid");
             }
             System.out.println("\nDoriti sa mai jucati o data? Y/N");
             Scanner reincerc = new Scanner(System.in);
