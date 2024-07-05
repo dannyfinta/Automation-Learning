@@ -1,69 +1,236 @@
-import java.util.Scanner;
+
+import java.util.*;
+
 
 public class Main {
-    public static void main(String[] args) {
-        //Banking();
-        Randomguess();
 
+    public static double ticketprice(int ticketsnumber, String dicounttype, int arriving){
+        //declaring price
+        final int morningprice = 10;
+        final int noonprice = 20;
+        final int eveningprice = 30;
+        String typeofdiscount = dicounttype;
+        double price = 0;
+
+        switch (typeofdiscount) {
+            case "kids":
+                price = 0;
+                break;
+            case "students":
+                if (arriving < 12) {
+                    price = ticketsnumber*0.75 * morningprice;
+                }
+                else {
+                    if (arriving <= 17) {
+                        price = ticketsnumber*0.75 * noonprice;
+                    }
+                    else {
+                        price = ticketsnumber*0.75 * eveningprice;
+                    }
+                }
+                break;
+            case "older":
+                if (arriving < 12) {
+                    price = ticketsnumber*0.5 * morningprice;
+                }
+                else {
+                    if (arriving <= 17) {
+                        price = ticketsnumber*0.5 * noonprice;
+                    }
+                    else {
+                        price = ticketsnumber*0.5 * eveningprice;
+                    }
+                }
+                break;
+            case "normal":
+                if (arriving < 12) {
+                    price = morningprice*ticketsnumber;
+                }
+                else {
+                    if (arriving <= 17) {
+                        price = noonprice*ticketsnumber;
+                    }
+                    else {
+                        price = eveningprice*ticketsnumber;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+        return price;
     }
-    public static void Randomguess() {
-        double correctnumber = 0;
-        double numar = 0;
-        String continua = "y";
 
-        do {
-            correctnumber = Math.random();
-            numar = Math.round(correctnumber*100)+1;
+    public static boolean isOpen(String day, int arrivinghour) {
+        int[] MondayTimes = {9, 18};
+        int[] TuesdayTimes = {11, 19};
+        int[] WednesdayTimes = {8, 17};
+        int[] ThursdayTimes = {9, 20};
+        int[] FridayTimes = {10, 18};
+        String[] dayoftheweek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+        List<String> dayoftheweeklist = Arrays.asList(dayoftheweek);
 
-            System.out.println("\nGhici numarul intreg intre 1 si 100");
-            Scanner scanner = new Scanner(System.in);
+        if (dayoftheweeklist.contains(day)) {
 
-            if (scanner.hasNextInt() == true) {
-                double n = Double.parseDouble(scanner.nextLine());
-                int iteratii = 0;
-                while (n != numar) {
-                    System.out.println("\nN-ai ghicit, mai ai o sansa. Introdu un nou ghici :)");
-                    if (n < numar) {
-                        System.out.println("de data asta incearca un numar mai mare");
-                    } else {
-                        System.out.println("de data asta incearca un numar mai mic");
-                    }
-                    n = Integer.parseInt(scanner.nextLine());
-                    iteratii = iteratii + 1;
+            HashMap<String, Integer> OpeningHours = new HashMap<>(5);
+            //Adding Values
+            OpeningHours.put("Monday", MondayTimes[0]);
+            OpeningHours.put("Tuesday", TuesdayTimes[0]);
+            OpeningHours.put("Wednesday", WednesdayTimes[0]);
+            OpeningHours.put("Thursday", ThursdayTimes[0]);
+            OpeningHours.put("Friday", FridayTimes[0]);
+
+            HashMap<String, Integer> ClosingHours = new HashMap<>(5);
+            //Adding Values
+            ClosingHours.put("Monday", MondayTimes[1]);
+            ClosingHours.put("Tuesday", TuesdayTimes[1]);
+            ClosingHours.put("Wednesday", WednesdayTimes[1]);
+            ClosingHours.put("Thursday", ThursdayTimes[1]);
+            ClosingHours.put("Friday", FridayTimes[1]);
 
 
-                }
-                //System.out.println("\nBravo in sfarsit ai ghicit");
-                if (iteratii <= 5) {
-                    System.out.println("Amazing! you have a great intuition!!!");
+            if (arrivinghour >= OpeningHours.get(day) & arrivinghour < ClosingHours.get(day)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
+
+    public static void main(String[] args) {
+
+        //declaring income
+        double totalincome = 0;
+        int tickets = 0;
+        int students = 0;
+        int older = 0;
+        int kids =0;
+        double mondayincome =0;
+        double tuesdayincome=0;
+        double wednesdayincome=0;
+        double thursdayincome =0;
+        double fridayincome = 0;
+
+        boolean eow = false;
+        String sfs = "n";
+
+
+
+        while (!eow) {
+
+            System.out.println("\nIntroduceti Ziua vizitei: Monday, Tuesday, Wednesday, Thursday, Firday");
+            Scanner ziuasosirii = new Scanner(System.in);
+            String arrivalday = ziuasosirii.nextLine();
+
+            System.out.println("\nIntroduceti Ora vizitei: Numar intreg intre 0 si 24");
+            Scanner orasosirii = new Scanner(System.in);
+            int arrivaltime = orasosirii.nextInt();
+
+            boolean deschis = isOpen(arrivalday, arrivaltime);
+
+            if (deschis) {
+
+                System.out.println("\nCate persoane viziteaza?");
+                Scanner nrpersoane = new Scanner(System.in);
+                tickets = nrpersoane.nextInt();
+
+
+                System.out.println("\nCati copii sub 7 ani va insotesc?");
+                Scanner nrcopii = new Scanner(System.in);
+                kids = nrcopii.nextInt();
+                if (kids < tickets) {
+                    tickets = tickets - kids;
                 } else {
-                    if (iteratii <= 10) {
-                        System.out.println("Well done! You have good guessing skills!");
-                    } else {
-                        if (iteratii <= 15) {
-                            System.out.println("Good job! Practice makes it perfect.");
-                        } else {
-                            if (iteratii <= 20) {
-                                System.out.println("Nice effort! Keep practicing to improve!");
-                            } else {
-                                System.out.println("Don't give up! You'll get better with more Practice!!!");
-                            }
-                        }
-                    }
-
+                    System.out.println("\nCopiii trebuie sa fie insotiti de minim un adult");
                 }
 
 
+                System.out.println("\nCati studeti exista in grupul dumneavoastra?");
+                Scanner nrstudenti = new Scanner(System.in);
+                students = nrstudenti.nextInt();
+                if (students <= tickets) {
+                    tickets = tickets - students;
+                } else {
+                    System.out.println("\nAti introdus un numar mai mare decat numarul declarat de bilete");
+                }
+
+                System.out.println("\nCati pensionari exista in grupul dumneavoastra?");
+                Scanner nrpensionari = new Scanner(System.in);
+                older = nrpensionari.nextInt();
+                if (older <= tickets) {
+                    tickets = tickets - older;
+                } else {
+                    System.out.println("\nAti introdus un numar mai mare decat numarul declarat de bilete");
+                }
+
+
+                switch (arrivalday){
+                    case "Monday":
+                        mondayincome = mondayincome + ticketprice(tickets,"normal",arrivaltime)+ticketprice(kids, "kids", arrivaltime)+ticketprice(students, "students", arrivaltime)+ticketprice(older, "older", arrivaltime);
+                        break;
+                    case "Tuesday":
+                        tuesdayincome = tuesdayincome + ticketprice(tickets,"normal",arrivaltime)+ticketprice(kids, "kids", arrivaltime)+ticketprice(students, "students", arrivaltime)+ticketprice(older, "older", arrivaltime);
+                        break;
+                    case "Wednesday":
+                        wednesdayincome = wednesdayincome + ticketprice(tickets,"normal",arrivaltime)+ticketprice(kids, "kids", arrivaltime)+ticketprice(students, "students", arrivaltime)+ticketprice(older, "older", arrivaltime);
+                        break;
+                    case "Thursday":
+                        thursdayincome = thursdayincome + ticketprice(tickets,"normal",arrivaltime)+ticketprice(kids, "kids", arrivaltime)+ticketprice(students, "students", arrivaltime)+ticketprice(older, "older", arrivaltime);
+                        break;
+                    case "Friday":
+                        fridayincome = fridayincome + ticketprice(tickets,"normal",arrivaltime)+ticketprice(kids, "kids", arrivaltime)+ticketprice(students, "students", arrivaltime)+ticketprice(older, "older", arrivaltime);
+                        break;
+                }
+
+
+                System.out.println("\nEste sfarsit de saptamana? Y/N");
+                Scanner sfsaptamana = new Scanner(System.in);
+                sfs = sfsaptamana.nextLine();
             }
             else {
-                System.out.println("Nu ati introdus un numar valid");
+                System.out.println("\nNe pare rau dar este inchis");
+                System.out.println("\nEste sfarsit de saptamana? Y/N");
+                Scanner sfsaptamana = new Scanner(System.in);
+                sfs = sfsaptamana.nextLine();
             }
-            System.out.println("\nDoriti sa mai jucati o data? Y/N");
-            Scanner reincerc = new Scanner(System.in);
-            continua = reincerc.nextLine();
 
-
-        } while (continua.equalsIgnoreCase("y"));
+            if (sfs.equalsIgnoreCase("y")){
+                eow = true;
+            }
+            totalincome = mondayincome + wednesdayincome + tuesdayincome + thursdayincome + fridayincome;
+            System.out.println("\nSaptamana asta ati obtinut venituri din vanzarea biletelor in valoare de:");
+            System.out.println("\nLuni:" + " " + mondayincome + "$");
+            System.out.println("\nMarti:" + " " + tuesdayincome + "$");
+            System.out.println("\nMiercuri:" + " " + wednesdayincome + "$");
+            System.out.println("\nJoi:" + " " + thursdayincome + "$");
+            System.out.println("\nVineri:" + " " + fridayincome + "$");
+            System.out.println("\nTOTAL:" + " " + totalincome + "$");
+            double max = Math.max(mondayincome, Math.max(tuesdayincome, Math.max(wednesdayincome, Math.max(thursdayincome, fridayincome))));
+            if (max == mondayincome){
+                System.out.println("\nZiua cu cele mai mari venituri este Luni:" + " " + mondayincome + "$");
+            }
+            else {
+                if (max == tuesdayincome){
+                    System.out.println("\nZiua cu cele mai mari venituri este Marti:" + " " + tuesdayincome + "$");
+                }
+                else {
+                    if (max == wednesdayincome){
+                        System.out.println("\nZiua cu cele mai mari venituri este Miercuri:" + " " + wednesdayincome + "$");
+                    }
+                    else {
+                        if (max == thursdayincome){
+                            System.out.println("\nZiua cu cele mai mari venituri este Joi:" + " " + thursdayincome + "$");
+                        }
+                        else {
+                            System.out.println("\nZiua cu cele mai mari venituri este Vineri:" + " " + fridayincome + "$");
+                        }
+                    }
+                }
+            }
+        }
 
     }
 
@@ -73,139 +240,7 @@ public class Main {
 
 
 
-        public static void Banking() {
-            double balantainitiala = 1000;
-            double conteconomii = 240;
-            String continua = "y";
 
-            do {
-                System.out.println("\nCe operatiune doriti sa efectuati?");
-                System.out.println("1. Verificare sold");
-                System.out.println("2. Deposit");
-                System.out.println("3. Retragere");
-                System.out.println("4. Transfer (intre conturi)");
-                Scanner selectie = new Scanner(System.in);
-
-                if (selectie.hasNextInt() == false) {
-                    System.out.println("Optiune incorecta");
-                    System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
-                    Scanner reincerc = new Scanner(System.in);
-                    continua = reincerc.nextLine();
-                } else {
-                    int selectnumber = selectie.nextInt();
-                    switch (selectnumber) {
-                        case 1:
-                            System.out.println("In ce moneda Doriti sa vizualizati soldul?");
-                            System.out.println("1. USD");
-                            System.out.println("2. EUR");
-                            System.out.println("3. RON");
-
-                            int selectv = selectie.nextInt();
-
-                            switch (selectv) {
-                                case 1:
-                                    System.out.println("Contul dumnevoastra curent este de: " + balantainitiala + " USD");
-                                    System.out.println("Contul dumnevoastra economii este de: " + conteconomii + " USD");
-                                    System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
-                                    Scanner reincerc = new Scanner(System.in);
-                                    continua = reincerc.nextLine();
-                                    break;
-                                case 2:
-                                    System.out.println("Contul dumnevoastra curent este de: " + 0.93 * balantainitiala + " EUR");
-                                    System.out.println("Contul dumnevoastra economii este de: " + 0.93 * conteconomii + " EUR");
-                                    System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
-                                    reincerc = new Scanner(System.in);
-                                    continua = reincerc.nextLine();
-                                    break;
-                                case 3:
-                                    System.out.println("Contul dumnevoastra curent este de: " + 4.63 * balantainitiala + " RON");
-                                    System.out.println("Contul dumnevoastra economii este de: " + 4.63 * conteconomii + " RON");
-                                    System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
-                                    reincerc = new Scanner(System.in);
-                                    continua = reincerc.nextLine();
-                                    break;
-                                default:
-                                    System.out.println("Nu ati ales o optiune valida");
-                                    System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
-                                    reincerc = new Scanner(System.in);
-                                    continua = reincerc.nextLine();
-                                    break;
-
-                            }
-
-                            break;
-
-                        case 2:
-                            System.out.println("Ce suma doriti sa depozitati?");
-                            Scanner sumadepozit = new Scanner(System.in);
-                            double sd = Double.parseDouble(sumadepozit.nextLine());
-                            if (sd > 0) {
-                                balantainitiala = balantainitiala + sd;
-                                System.out.println("Contul dumnevoastra are acum in el " + balantainitiala + " USD");
-                                System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
-                                Scanner reincerc = new Scanner(System.in);
-                                continua = reincerc.nextLine();
-                                break;
-                            } else {
-                                System.out.println("Valoarea introdusa este incorecta");
-                                System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
-                                Scanner reincerc = new Scanner(System.in);
-                                continua = reincerc.nextLine();
-                                break;
-                            }
-                        case 3:
-                            System.out.println("Ce suma doriti sa retrageti");
-                            Scanner sumaretragere = new Scanner(System.in);
-                            double sr = Double.parseDouble(sumaretragere.nextLine());
-                            if (balantainitiala >= sr & sr > 0) {
-                                balantainitiala = balantainitiala - sr - (1 - sr % 1);
-                                conteconomii = conteconomii + (1 - sr % 1);
-                                System.out.println("Contul dumnevoastra are acum in el " + balantainitiala + " USD");
-                                System.out.println("Contul dumnevoastra de economii are acum in el " + conteconomii + " USD");
-                                System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
-                                Scanner reincerc = new Scanner(System.in);
-                                continua = reincerc.nextLine();
-                                break;
-                            } else {
-                                System.out.println("Fonduri insuficiente");
-                                System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
-                                Scanner reincerc = new Scanner(System.in);
-                                continua = reincerc.nextLine();
-                                break;
-                            }
-                        case 4:
-                            System.out.println("Ce suma doriti sa transferati?");
-                            Scanner sumatransfer = new Scanner(System.in);
-                            double st = Double.parseDouble(sumatransfer.nextLine());
-                            if (balantainitiala >= st & st>0) {
-                                balantainitiala = balantainitiala - st;
-                                conteconomii = conteconomii + st;
-                                System.out.println("Contul dumnevoastra are acum in el " + balantainitiala + " USD");
-                                System.out.println("Contul dumnevoastra de economii are acum in el " + conteconomii + " USD");
-                                System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
-                                Scanner reincerc = new Scanner(System.in);
-                                continua = reincerc.nextLine();
-                                break;
-                            } else {
-                                System.out.println("Fonduri insuficiente sau suma incorecta");
-                                System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
-                                Scanner reincerc = new Scanner(System.in);
-                                continua = reincerc.nextLine();
-                                break;
-                            }
-
-                        default:
-                            System.out.println("Nu ati ales o optiune valida");
-                            System.out.println("\nDoriti sa efectuati o alta operatiune? Y/N");
-                            Scanner reincerc = new Scanner(System.in);
-                            continua = reincerc.nextLine();
-                            break;
-
-
-                    }
-                }
-            } while (continua.equalsIgnoreCase("y"));
-            System.out.println("Va multumim ca ati apelat la serviciile bancii noastre!");
-        }
 }
+
 
