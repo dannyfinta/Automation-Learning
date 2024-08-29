@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Main {
 
+    //Metoda calculeaza pretul biletelor in functie de numarul de bilete, tipul discountului si ora sosirii
     public static double ticketprice(int ticketsnumber, String dicounttype, int arriving){
         //declaring price
         final int morningprice = 10;
@@ -60,7 +61,7 @@ public class Main {
         }
         return price;
     }
-
+//Metoda care defineste daca este deschis sau nu
     public static boolean isOpen(String day, int arrivinghour) {
         int[] MondayTimes = {9, 18};
         int[] TuesdayTimes = {11, 19};
@@ -116,8 +117,6 @@ public class Main {
 
         boolean eow = false;
         String sfs = "n";
-
-
 
         while (!eow) {
 
