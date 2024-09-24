@@ -16,7 +16,7 @@ public class Main {
         System.out.println("\nGenul persoanelor este: " + returnArrayGender(GenderList));
         countBoysGirls(returnArrayGender(GenderList));
         System.out.println("\nNUmarul fetelor este: " + countRomanianGirl(returnArrayNames(GenderList)));
-
+        System.out.println("\nLista sortata este: " + sortGenderMap(returnArrayNames(GenderList)));
     }
     public static Map<String, String> populateValues(Map genderMap, int numberOfInputs) {
         for (int i=0; i<numberOfInputs; i++) {
@@ -90,6 +90,16 @@ public class Main {
         }
         return count;
 
+    }
+
+    public static ArrayList<String> sortGenderMap(ArrayList<String> unsorted){
+       Collections.sort(unsorted);
+       return unsorted;
+
+        /* String[] intermediateUnsorted = unsorted.toArray(new String[0]);
+        Arrays.sort(intermediateUnsorted);
+        ArrayList<String> al = new ArrayList<>(Arrays.asList(intermediateUnsorted));
+        return al;*/
     }
 
 //Main finishes here
