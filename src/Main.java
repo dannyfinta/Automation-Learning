@@ -12,7 +12,10 @@ public class Main {
 
         printNames(GenderList);
         printGene(GenderList);
-        System.out.println("\nNumele persoanelor este: " + returnArray(GenderList));
+        System.out.println("\nNumele persoanelor este: " + returnArrayNames(GenderList));
+        System.out.println("\nGenul persoanelor este: " + returnArrayGender(GenderList));
+        countBoysGirls(returnArrayGender(GenderList));
+        System.out.println("\nNUmarul fetelor este: " + countRomanianGirl(returnArrayNames(GenderList)));
 
     }
     public static Map<String, String> populateValues(Map genderMap, int numberOfInputs) {
@@ -39,13 +42,55 @@ public class Main {
         System.out.println(genderMap.values());
     }
 
-    public static ArrayList<String> returnArray (Map genderMap){
+    public static ArrayList<String> returnArrayNames (Map genderMap){
         ArrayList<String> namesAsArray = new ArrayList<>();
         namesAsArray.addAll(genderMap.keySet());
 
         return namesAsArray;
     }
 
+    public static ArrayList<String> returnArrayGender (Map genderMap){
+        ArrayList<String> genderAsArray = new ArrayList<>();
+        genderAsArray.addAll(genderMap.values());
+
+        return genderAsArray;
+    }
+
+    public static void countBoysGirls(ArrayList<String> genderMap){
+        int countBoys = 0;
+        int countGirls = 0;
+        for (int i=0; i< genderMap.size(); i++){
+            if (genderMap.get(i).equalsIgnoreCase("Boy")){
+                countBoys++;
+            }
+            else {
+                countGirls++;
+            }
+        }
+        System.out.println("\n in lista sunt " + countBoys + " baieti si " + countGirls + " fete");
+    }
+
+    public static boolean stringEndLetter(String name, char letter){
+        int stringLeght = name.length();
+        StringBuffer intermediateName = new StringBuffer(name);
+        if (intermediateName.substring(stringLeght-1).equalsIgnoreCase(Character.toString(letter))){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public static int countRomanianGirl (ArrayList<String> list){
+        int count = 0;
+        for (int i=0; i< list.size(); i++){
+            if (stringEndLetter(list.get(i), 'a')){
+                count++;
+            }
+        }
+        return count;
+
+    }
 
 //Main finishes here
 }
