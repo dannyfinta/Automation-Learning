@@ -17,6 +17,11 @@ public class Main {
         countBoysGirls(returnArrayGender(GenderList));
         System.out.println("\nNUmarul fetelor este: " + countRomanianGirl(returnArrayNames(GenderList)));
         System.out.println("\nLista sortata este: " + sortGenderMap(returnArrayNames(GenderList)));
+        System.out.println("\nCe nume doriti sa eliminati?: ");
+        Scanner cuvant2 = new Scanner(System.in);
+        String numeEliminat = cuvant2.nextLine();
+        removeName(numeEliminat, returnArrayNames(GenderList));
+
     }
     public static Map<String, String> populateValues(Map genderMap, int numberOfInputs) {
         for (int i=0; i<numberOfInputs; i++) {
@@ -100,6 +105,11 @@ public class Main {
         Arrays.sort(intermediateUnsorted);
         ArrayList<String> al = new ArrayList<>(Arrays.asList(intermediateUnsorted));
         return al;*/
+    }
+
+    public static void removeName(String name, ArrayList<String> genderMap){
+        genderMap.remove(name);
+        System.out.println("\nLista cu numele eliminat este: " + genderMap);
     }
 
 //Main finishes here
